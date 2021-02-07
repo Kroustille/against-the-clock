@@ -1,8 +1,3 @@
-export class Game {
-  public start() {
-    console.log('Game started !')
-  }
-}
+import { Game } from './common/Game'
 
-const game = new Game()
-game.start()
+new Game().start()
