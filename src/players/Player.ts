@@ -1,4 +1,4 @@
-import { Actor, CollisionType, Color, Engine, Input } from 'excalibur'
+import { Actor, CollisionType, Color, Engine, Input, SpriteSheet } from 'excalibur'
 
 const MAX_VELOCITY = 150
 const BRAKE_VELOCITY = 5
@@ -7,11 +7,6 @@ const SPEED = 10
 export class Player extends Actor {
   constructor() {
     super({ x: 100, y: 100, width: 100, height: 100 })
-  }
-
-  public onInitialize() {
-    this.color = Color.Cyan
-    this.body.collider.type = CollisionType.Fixed
   }
 
   public update(engine: Engine, delta: number) {
