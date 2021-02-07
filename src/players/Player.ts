@@ -1,4 +1,4 @@
-import { Actor, Engine, Input, SpriteSheet } from 'excalibur'
+import { Actor, CollisionType, Engine, Input, SpriteSheet } from 'excalibur'
 import { txPlayer0, txPlayer1, txPlayer2, txPlayer3 } from '../common/resources'
 
 const MAX_VELOCITY = 150
@@ -7,7 +7,9 @@ const SPEED = 10
 
 export class Player extends Actor {
   constructor() {
-    super({ x: 300, y: 300 })
+    super({ x: 300, y: 300, width: 24, height: 24 })
+
+    this.body.collider.type = CollisionType.Active
   }
 
   public onInitialize(engine: Engine) {
@@ -85,5 +87,10 @@ export class Player extends Actor {
     } else if (this.vel.y < 0) {
       this.vel.y += BRAKE_VELOCITY
     }
+  }
+
+  public stop() {
+    this.vel.x = 0
+    this.vel.y = 0
   }
 }
