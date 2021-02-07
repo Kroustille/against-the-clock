@@ -1,4 +1,5 @@
-import { Actor, CollisionType, Color, Engine, Input, SpriteSheet } from 'excalibur'
+import { Actor, Engine, Input, SpriteSheet } from 'excalibur'
+import { txPlayer0, txPlayer1, txPlayer2, txPlayer3 } from '../common/resources'
 
 const MAX_VELOCITY = 150
 const BRAKE_VELOCITY = 5
@@ -6,7 +7,20 @@ const SPEED = 10
 
 export class Player extends Actor {
   constructor() {
-    super({ x: 100, y: 100, width: 100, height: 100 })
+    super({ x: 300, y: 300 })
+  }
+
+  public onInitialize(engine: Engine) {
+    const playerSprite0 = txPlayer0.asSprite()
+    const playerSprite1 = txPlayer1.asSprite()
+    const playerSprite2 = txPlayer2.asSprite()
+    const playerSprite3 = txPlayer3.asSprite()
+
+    const playerIdleSheet = new SpriteSheet([playerSprite0, playerSprite1, playerSprite2, playerSprite3])
+    const playerIdleAnimation = playerIdleSheet.getAnimationForAll(engine, 125)
+
+    this.addDrawing('idle', playerIdleAnimation)
+    this.scale.setTo(2, 2)
   }
 
   public update(engine: Engine, delta: number) {
