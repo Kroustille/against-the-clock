@@ -3,14 +3,14 @@ import { txIdlePlayer0, txIdlePlayer1, txIdlePlayer2, txIdlePlayer3, txRunningPl
 import { Directions, HorizontalDirection, Player, VerticalDirection } from './Player'
 
 const MAX_VELOCITY = 300
-const BRAKE_VELOCITY = 10
+const BRAKE_VELOCITY = 15
 const SPEED = 25
 
 export class PlayerActor extends Actor {
   private player: Player
 
   constructor(player: Player) {
-    super({ x: 300, y: 300, width: 24, height: 24 })
+    super({ x: 50, y: 50, width: 24, height: 24 })
 
     this.body.collider.type = CollisionType.Active
     this.player = player
@@ -37,7 +37,7 @@ export class PlayerActor extends Actor {
     this.addDrawing('moving', playerRunningRightAnimation)
 
     this.setDrawing('idle')
-    this.scale.setTo(1.5, 1.5)
+    this.scale.setTo(1, 1)
   }
 
   public update(engine: Engine, delta: number) {
@@ -90,9 +90,17 @@ export class PlayerActor extends Actor {
     } else {
       this.setDrawing('idle')
       if (this.vel.x > 0) {
-        xVelocityDelta = -BRAKE_VELOCITY
+        if (this.vel.x < BRAKE_VELOCITY) {
+          xVelocityDelta = -this.vel.x
+        } else {
+          xVelocityDelta = -BRAKE_VELOCITY
+        }
       } else if (this.vel.x < 0) {
-        xVelocityDelta = BRAKE_VELOCITY
+        if (this.vel.x > BRAKE_VELOCITY) {
+          xVelocityDelta = this.vel.x
+        } else {
+          xVelocityDelta = BRAKE_VELOCITY
+        }
       }
     }
 
@@ -105,9 +113,17 @@ export class PlayerActor extends Actor {
       yVelocityDelta = SPEED
     } else {
       if (this.vel.y > 0) {
-        yVelocityDelta = -BRAKE_VELOCITY
+        if (this.vel.y < BRAKE_VELOCITY) {
+          yVelocityDelta = -this.vel.y
+        } else {
+          yVelocityDelta = -BRAKE_VELOCITY
+        }
       } else if (this.vel.y < 0) {
-        yVelocityDelta = BRAKE_VELOCITY
+        if (this.vel.y > BRAKE_VELOCITY) {
+          yVelocityDelta = this.vel.y
+        } else {
+          yVelocityDelta = BRAKE_VELOCITY
+        }
       }
     }
 

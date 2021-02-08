@@ -1,4 +1,5 @@
 export enum CellType {
   WALL,
-  EMPTY
+  EMPTY,
+  DOOR
 }

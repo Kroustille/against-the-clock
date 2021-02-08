@@ -36,7 +36,7 @@ const loader = new Loader([
   txRunningPlayer2,
   txRunningPlayer3,
   txWallLeft,
-  txForestTiles
+  txForestTiles,
 ])
 
 export {
