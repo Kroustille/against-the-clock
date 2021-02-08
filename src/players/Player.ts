@@ -1,17 +1,4 @@
-export enum HorizontalDirection {
-  LEFT,
-  RIGHT
-}
-
-export enum VerticalDirection {
-  UP,
-  BOTTOM
-}
-
-export interface Directions {
-  horizontalDirection?: HorizontalDirection
-  verticalDirection?: VerticalDirection
-}
+import { Directions } from 'src/common/Directions'
 
 export class Player {
   private directions: Directions

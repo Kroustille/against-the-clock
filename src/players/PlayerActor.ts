@@ -1,19 +1,24 @@
 import { Actor, CollisionType, Engine, Input, SpriteSheet } from 'excalibur'
+import { BulletActor } from '../bullets/BulletActor'
 import { txIdlePlayer0, txIdlePlayer1, txIdlePlayer2, txIdlePlayer3, txRunningPlayer0, txRunningPlayer1, txRunningPlayer2, txRunningPlayer3 } from '../common/resources'
-import { Directions, HorizontalDirection, Player, VerticalDirection } from './Player'
+import { Directions, HorizontalDirection, VerticalDirection } from '../common/Directions'
+import { Player } from './Player'
 
 const MAX_VELOCITY = 300
 const BRAKE_VELOCITY = 15
 const SPEED = 25
+const SHOOT_SPEED = 250
 
 export class PlayerActor extends Actor {
   private player: Player
+  private lastShootTime: number
 
   constructor(player: Player) {
     super({ x: 50, y: 50, width: 24, height: 24 })
 
     this.body.collider.type = CollisionType.Active
     this.player = player
+    this.lastShootTime = 0
   }
 
   public onInitialize(engine: Engine) {
@@ -44,7 +49,7 @@ export class PlayerActor extends Actor {
     const pressedKeys = engine.input.keyboard.getKeys()
     const directions: Directions = {}
     if (pressedKeys.includes(Input.Keys.S)) {
-      directions.verticalDirection = VerticalDirection.BOTTOM
+      directions.verticalDirection = VerticalDirection.DOWN
     } else if (pressedKeys.includes(Input.Keys.Z)) {
       directions.verticalDirection = VerticalDirection.UP
     }
@@ -57,11 +62,37 @@ export class PlayerActor extends Actor {
 
     this.player.chooseDirection(directions)
 
+    if (pressedKeys.includes(Input.Keys.Right)) {
+      this.shoot(engine, HorizontalDirection.RIGHT)
+    }
+
+    if (pressedKeys.includes(Input.Keys.Left)) {
+      this.shoot(engine, HorizontalDirection.LEFT)
+    }
+
+    if (pressedKeys.includes(Input.Keys.Down)) {
+      this.shoot(engine, VerticalDirection.DOWN)
+    }
+
+    if (pressedKeys.includes(Input.Keys.Up)) {
+      this.shoot(engine, VerticalDirection.UP)
+    }
+
     this.move()
 
     this.limitVelocity()
 
     super.update(engine, delta)
+  }
+
+  private shoot(engine: Engine, direction: HorizontalDirection | VerticalDirection) {
+    const now = new Date().getTime()
+    const canShoot = now - this.lastShootTime > SHOOT_SPEED
+    if (canShoot) {
+      this.lastShootTime = now
+      const bullet = new BulletActor(this.pos.x, this.pos.y, direction, this)
+      engine.add(bullet)
+    }
   }
 
   private limitVelocity() {
@@ -109,7 +140,7 @@ export class PlayerActor extends Actor {
     let yVelocityDelta = 0
     if (verticalDirection === VerticalDirection.UP) {
       yVelocityDelta = -SPEED
-    } else if (verticalDirection === VerticalDirection.BOTTOM) {
+    } else if (verticalDirection === VerticalDirection.DOWN) {
       yVelocityDelta = SPEED
     } else {
       if (this.vel.y > 0) {
