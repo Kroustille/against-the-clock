@@ -3,7 +3,6 @@ import { Room } from './Room'
 import { CellType } from './CellType'
 
 export class StartRoom extends Room {
-
   public generate(): CellType[] {
     for (let x = 0; x < COLS; x++) {
       for (let y = 0; y < ROWS; y++) {

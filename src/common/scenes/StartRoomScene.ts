@@ -1,5 +1,5 @@
 import { Engine, Scene, SpriteSheet, TileMap, TileSprite } from 'excalibur'
-import { Player } from 'src/players/Player'
+import { PlayerActor } from '../../players/PlayerActor'
 import { CellType } from '../../rooms/CellType'
 import { StartRoom } from '../../rooms/StartRoom'
 import { GAME_HEIGHT, GAME_WIDTH, ROWS, TILE_SIZE } from '../config'
@@ -18,7 +18,7 @@ interface MapDefinition {
 export class StartRoomScene extends Scene {
   private tileMap: TileMap
   private mapDefiniton: MapDefinition
-  private player?: Player
+  private player?: PlayerActor
 
   constructor(engine: Engine) {
     super(engine)
@@ -44,13 +44,25 @@ export class StartRoomScene extends Scene {
 
     this.tileMap.registerSpriteSheet('1', forestSpriteSheet)
     const grassSprite = new TileSprite('1', 0)
-    const flowerSprite = new TileSprite('1', 1)
+    const flowerSprite1 = new TileSprite('1', 1)
+    const flowerSprite2 = new TileSprite('1', 2)
+    const flowerSprite3 = new TileSprite('1', 3)
 
+    let spriteIndex = 1
     this.mapDefiniton.cells.forEach((cell: CellType, index: number) => {
       const x = Math.floor(index / ROWS)
       const y = index % ROWS
       if (cell == CellType.WALL) {
-        this.tileMap.getCell(x, y).pushSprite(flowerSprite)
+        if (spriteIndex === 1) {
+          this.tileMap.getCell(x, y).pushSprite(flowerSprite1)
+          spriteIndex = 2
+        } else if (spriteIndex === 2) {
+          this.tileMap.getCell(x, y).pushSprite(flowerSprite2)
+          spriteIndex = 3
+        } else if (spriteIndex === 3) {
+          this.tileMap.getCell(x, y).pushSprite(flowerSprite3)
+          spriteIndex = 1
+        }
         this.tileMap.getCell(x, y).solid = true
       } else {
         this.tileMap.getCell(x, y).pushSprite(grassSprite)
@@ -60,7 +72,7 @@ export class StartRoomScene extends Scene {
     this.add(this.tileMap)
   }
 
-  public addPlayer(player: Player): void {
+  public addPlayer(player: PlayerActor): void {
     this.player = player
     super.add(player)
   }

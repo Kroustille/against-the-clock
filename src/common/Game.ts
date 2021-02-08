@@ -1,5 +1,6 @@
 import { CollisionResolutionStrategy, Color, DisplayMode, Engine, Physics } from 'excalibur'
 import { Player } from '../players/Player'
+import { PlayerActor } from '../players/PlayerActor'
 import { GAME_WIDTH, GAME_HEIGHT } from './config'
 import { loader } from './resources'
 import { StartRoomScene } from './scenes/StartRoomScene'
@@ -15,8 +16,9 @@ export class Game extends Engine {
   public start() {
     return super.start(loader).then(() => {
       const player = new Player()
+      const playerActor = new PlayerActor(player)
       const startRoom = new StartRoomScene(this)
-      startRoom.addPlayer(player)
+      startRoom.addPlayer(playerActor)
 
       this.add('room', startRoom)
 
