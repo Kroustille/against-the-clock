@@ -5,7 +5,8 @@ import { StartRoom } from '../StartRoom'
 import { GAME_HEIGHT, GAME_WIDTH, ROWS, TILE_SIZE } from '../../common/config'
 import { txFloor, txForestTiles } from '../../common/resources'
 import { TileMapFactory } from '../../common/scenes/TileMapFactory'
-import { Player } from '../../players/Player'
+import { EnemyActor } from '../../enemies/EnemyActor'
+import { Diplodocus } from '../../enemies/Diplodocus'
 
 interface MapDefinition {
   cells: CellType[]
@@ -62,9 +63,12 @@ export class StartRoomScene extends Scene {
     this.mapDefiniton.cells.forEach((cell: CellType, index: number) => {
       this.addFloorSprites(index, cell, wallSprite, doorSprite, [floor0, floor1, floor2, floor3])
     })
+    const diplodocus = new Diplodocus()
+    const enemyActor = new EnemyActor(diplodocus)
 
     this.add(this.tileMap)
     this.add(this.player)
+    this.add(enemyActor)
   }
 
   private addFloorSprites(index: number, cell: CellType, wallSprite: TileSprite, doorSprite: TileSprite, floorSprites: TileSprite[]) {

@@ -88,9 +88,11 @@ export class PlayerActor extends Actor {
   private shoot(engine: Engine, direction: HorizontalDirection | VerticalDirection) {
     const now = new Date().getTime()
     const canShoot = now - this.lastShootTime > SHOOT_SPEED
+
     if (canShoot) {
       this.lastShootTime = now
-      const bullet = new BulletActor(this.pos.x, this.pos.y, direction, this)
+      const bullet = new BulletActor(this.pos.x, this.pos.y, direction, this.player.getDamage(), this)
+
       engine.add(bullet)
     }
   }

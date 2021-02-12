@@ -6,10 +6,20 @@ import { txWallLeft } from '../common/resources'
 const BULLET_SPEED = 150
 
 export class BulletActor extends Actor {
-  private owner: Actor
+  public owner: Actor
   private direction: HorizontalDirection | VerticalDirection
-  constructor(x: number, y: number, direction: HorizontalDirection | VerticalDirection, owner: Actor) {
+  private damage: number
+
+  constructor(
+    x: number,
+    y: number,
+    direction: HorizontalDirection | VerticalDirection,
+    damage: number,
+    owner: Actor,
+  ) {
     super({ x, y, width: 24, height: 24 })
+
+    this.damage = damage
 
     this.direction = direction
     this.body.collider.type = CollisionType.Passive
@@ -34,6 +44,10 @@ export class BulletActor extends Actor {
         this.vel.y = -BULLET_SPEED
         break
     }
+  }
+
+  public getDamage(): number {
+    return this.damage
   }
 
   public onPreCollision(event: PreCollisionEvent) {
