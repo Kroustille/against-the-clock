@@ -7,6 +7,7 @@ import { txFloor, txForestTiles } from '../../common/resources'
 import { TileMapFactory } from '../../common/scenes/TileMapFactory'
 import { EnemyActor } from '../../enemies/EnemyActor'
 import { Diplodocus } from '../../enemies/Diplodocus'
+import { Room } from '../Room'
 
 interface MapDefinition {
   cells: CellType[]
@@ -22,10 +23,9 @@ export class StartRoomScene extends Scene {
   private mapDefiniton: MapDefinition
   private player: PlayerActor
 
-  constructor(engine: Engine, player: PlayerActor) {
+  constructor(engine: Engine, player: PlayerActor, startRoom: StartRoom) {
     super(engine)
 
-    const startRoom = new StartRoom()
     const cells = startRoom.generate()
     const { TILE_SIZE, GAME_WIDTH, GAME_HEIGHT } = Config.WORLD
 

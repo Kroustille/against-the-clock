@@ -28,6 +28,5 @@ export abstract class Player {
 
   public takeDamageOfTime() {
     this.lifeInSeconds--
-    console.log(this.lifeInSeconds)
   }
 }

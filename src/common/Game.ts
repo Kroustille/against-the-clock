@@ -4,6 +4,7 @@ import { Config } from './Config'
 import { loader } from './resources'
 import { StartRoomScene } from '../rooms/scenes/StartRoomScene'
 import { BobGanoush } from '../players/BobGanoush'
+import { Prehistoric } from '../levels/Prehistoric'
 
 export class Game extends Engine {
   constructor() {
@@ -18,9 +19,13 @@ export class Game extends Engine {
     return super.start(loader).then(() => {
       const player = new BobGanoush()
       const playerActor = new PlayerActor(player)
-      const startRoom = new StartRoomScene(this, playerActor)
 
-      this.add('room', startRoom)
+      const level = new Prehistoric()
+      const startRoom = level.generate()
+
+      const startRoomScene = new StartRoomScene(this, playerActor, startRoom)
+
+      this.add('room', startRoomScene)
 
       this.goToScene('room')
     })
