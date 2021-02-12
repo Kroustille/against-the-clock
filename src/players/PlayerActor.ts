@@ -3,11 +3,7 @@ import { BulletActor } from '../bullets/BulletActor'
 import { txIdlePlayer0, txIdlePlayer1, txIdlePlayer2, txIdlePlayer3, txRunningPlayer0, txRunningPlayer1, txRunningPlayer2, txRunningPlayer3 } from '../common/resources'
 import { Directions, HorizontalDirection, VerticalDirection } from '../common/Directions'
 import { Player } from './Player'
-
-const MAX_VELOCITY = 300
-const BRAKE_VELOCITY = 15
-const SPEED = 25
-const SHOOT_SPEED = 250
+import { Config } from '../common/Config'
 
 export class PlayerActor extends Actor {
   private player: Player
@@ -56,7 +52,6 @@ export class PlayerActor extends Actor {
     })
 
     engine.addTimer(lifeTimer)
-    this.scale.setTo(1, 1)
   }
 
   public update(engine: Engine, delta: number) {
@@ -101,6 +96,7 @@ export class PlayerActor extends Actor {
 
   private shoot(engine: Engine, direction: HorizontalDirection | VerticalDirection) {
     const now = new Date().getTime()
+    const { SHOOT_SPEED } = Config.PLAYER
     const canShoot = now - this.lastShootTime > SHOOT_SPEED
 
     if (canShoot) {
@@ -112,6 +108,7 @@ export class PlayerActor extends Actor {
   }
 
   private limitVelocity() {
+    const { MAX_VELOCITY } = Config.PLAYER
     if (this.vel.x > MAX_VELOCITY) {
       this.vel.x = MAX_VELOCITY
     } else if (this.vel.x < -MAX_VELOCITY) {
@@ -126,6 +123,7 @@ export class PlayerActor extends Actor {
   }
 
   private move() {
+    const { BRAKE_VELOCITY, SPEED } = Config.PLAYER
     const { horizontalDirection, verticalDirection } = this.player.getDirections()
     let xVelocityDelta = 0
     if (horizontalDirection === HorizontalDirection.LEFT) {

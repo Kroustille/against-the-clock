@@ -2,7 +2,7 @@ import { Engine, Random, Scene, SpriteSheet, TileMap, TileSprite } from 'excalib
 import { PlayerActor } from '../../players/PlayerActor'
 import { CellType } from '../CellType'
 import { StartRoom } from '../StartRoom'
-import { GAME_HEIGHT, GAME_WIDTH, ROWS, TILE_SIZE } from '../../common/config'
+import { Config } from '../../common/Config'
 import { txFloor, txForestTiles } from '../../common/resources'
 import { TileMapFactory } from '../../common/scenes/TileMapFactory'
 import { EnemyActor } from '../../enemies/EnemyActor'
@@ -27,6 +27,7 @@ export class StartRoomScene extends Scene {
 
     const startRoom = new StartRoom()
     const cells = startRoom.generate()
+    const { TILE_SIZE, GAME_WIDTH, GAME_HEIGHT } = Config.WORLD
 
     const mapDefinition: MapDefinition = {
       tileWidth: TILE_SIZE,
@@ -72,6 +73,7 @@ export class StartRoomScene extends Scene {
   }
 
   private addFloorSprites(index: number, cell: CellType, wallSprite: TileSprite, doorSprite: TileSprite, floorSprites: TileSprite[]) {
+    const { ROWS } = Config.WORLD
     const x = Math.floor(index / ROWS)
     const y = index % ROWS
     const rand = new Random()

@@ -1,8 +1,10 @@
 import { TileMap } from 'excalibur'
-import { COLS, ROWS, TILE_SIZE } from '../config'
+import { Config } from '../Config'
 
 export class TileMapFactory {
   public static getEmptyTileMap(): TileMap {
+    const { COLS, ROWS, TILE_SIZE } = Config.WORLD
+
     return new TileMap(0, 0, TILE_SIZE, TILE_SIZE, ROWS, COLS)
   }
 }

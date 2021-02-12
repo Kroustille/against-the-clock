@@ -1,9 +1,8 @@
 import { Actor, CollisionType, PreCollisionEvent } from 'excalibur'
+import { Config } from '../common/Config'
 
 import { HorizontalDirection, VerticalDirection } from '../common/Directions'
 import { txWallLeft } from '../common/resources'
-
-const BULLET_SPEED = 150
 
 export class BulletActor extends Actor {
   public owner: Actor
@@ -29,19 +28,20 @@ export class BulletActor extends Actor {
   }
 
   public onInitialize() {
+    const { SPEED } = Config.BULLET
     this.addDrawing(txWallLeft)
     switch (this.direction) {
       case HorizontalDirection.LEFT:
-        this.vel.x = -BULLET_SPEED
+        this.vel.x = -SPEED
         break
       case HorizontalDirection.RIGHT:
-        this.vel.x = BULLET_SPEED
+        this.vel.x = SPEED
         break
       case VerticalDirection.DOWN:
-        this.vel.y = BULLET_SPEED
+        this.vel.y = SPEED
         break
       case VerticalDirection.UP:
-        this.vel.y = -BULLET_SPEED
+        this.vel.y = -SPEED
         break
     }
   }

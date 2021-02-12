@@ -1,6 +1,6 @@
 import { Color, DisplayMode, Engine } from 'excalibur'
 import { PlayerActor } from '../players/PlayerActor'
-import { GAME_WIDTH, GAME_HEIGHT } from './config'
+import { Config } from './Config'
 import { loader } from './resources'
 import { StartRoomScene } from '../rooms/scenes/StartRoomScene'
 import { BobGanoush } from '../players/BobGanoush'
@@ -8,6 +8,8 @@ import { BobGanoush } from '../players/BobGanoush'
 export class Game extends Engine {
   constructor() {
     super({ displayMode: DisplayMode.FullScreen, backgroundColor: Color.White, antialiasing: false })
+
+    const { GAME_WIDTH, GAME_HEIGHT } = Config.WORLD
 
     this.screen.resolution = { width: GAME_WIDTH, height: GAME_HEIGHT }
   }
