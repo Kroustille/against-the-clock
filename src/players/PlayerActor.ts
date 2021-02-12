@@ -1,4 +1,4 @@
-import { Actor, CollisionType, Engine, Input, SpriteSheet } from 'excalibur'
+import { Actor, CollisionType, Engine, Input, SpriteSheet, Timer } from 'excalibur'
 import { BulletActor } from '../bullets/BulletActor'
 import { txIdlePlayer0, txIdlePlayer1, txIdlePlayer2, txIdlePlayer3, txRunningPlayer0, txRunningPlayer1, txRunningPlayer2, txRunningPlayer3 } from '../common/resources'
 import { Directions, HorizontalDirection, VerticalDirection } from '../common/Directions'
@@ -42,6 +42,20 @@ export class PlayerActor extends Actor {
     this.addDrawing('moving', playerRunningRightAnimation)
 
     this.setDrawing('idle')
+
+    const lifeTimer = new Timer({
+      fcn: () => {
+        this.player.takeDamageOfTime()
+        if (this.player.isDead()) {
+          this.kill()
+        }
+      },
+      interval: 1000,
+      repeats: true,
+      numberOfRepeats: -1
+    })
+
+    engine.addTimer(lifeTimer)
     this.scale.setTo(1, 1)
   }
 

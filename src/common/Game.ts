@@ -1,9 +1,9 @@
 import { Color, DisplayMode, Engine } from 'excalibur'
-import { Player } from '../players/Player'
 import { PlayerActor } from '../players/PlayerActor'
 import { GAME_WIDTH, GAME_HEIGHT } from './config'
 import { loader } from './resources'
 import { StartRoomScene } from '../rooms/scenes/StartRoomScene'
+import { BobGanoush } from '../players/BobGanoush'
 
 export class Game extends Engine {
   constructor() {
@@ -14,7 +14,7 @@ export class Game extends Engine {
 
   public start() {
     return super.start(loader).then(() => {
-      const player = new Player()
+      const player = new BobGanoush()
       const playerActor = new PlayerActor(player)
       const startRoom = new StartRoomScene(this, playerActor)
 

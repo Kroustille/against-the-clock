@@ -6,4 +6,6 @@ export abstract class Room {
   public constructor() {
     this.cells = []
   }
+
+  public abstract generate(): CellType[]
 }

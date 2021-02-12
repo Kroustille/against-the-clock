@@ -1,12 +1,13 @@
 import { Directions } from 'src/common/Directions'
 
-export class Player {
+export abstract class Player {
   private directions: Directions
-  private damage: number
+  protected abstract lifeInSeconds: number
+  protected abstract baseDamage: number
+  protected baseDamageMultiplier: number = 1
 
   public constructor() {
     this.directions = {}
-    this.damage = 20
   }
 
   public chooseDirection(directions: Directions) {
@@ -18,6 +19,15 @@ export class Player {
   }
 
   public getDamage(): number {
-    return this.damage
+    return this.baseDamage * this.baseDamageMultiplier
+  }
+
+  public isDead(): boolean {
+    return this.lifeInSeconds <= 0
+  }
+
+  public takeDamageOfTime() {
+    this.lifeInSeconds--
+    console.log(this.lifeInSeconds)
   }
 }
