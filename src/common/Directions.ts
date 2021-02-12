@@ -1,11 +1,11 @@
 export enum HorizontalDirection {
-  LEFT = '0',
-  RIGHT = '1'
+  LEFT = 'LEFT',
+  RIGHT = 'RIGHT'
 }
 
 export enum VerticalDirection {
-  UP = '2',
-  DOWN = '3'
+  UP = 'UP',
+  DOWN = 'DOWN'
 }
 
 export interface Directions {

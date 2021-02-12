@@ -11,6 +11,8 @@ import knightRunning3 from '../assets/images/frames/knight_m_run_anim_f3.png'
 
 import forestTiles from '../assets/images/forest_tiles.png'
 
+import floor from '../assets/tiles/floor.png'
+
 import wallLeft from '../assets/images/frames/wall_left.png'
 
 const txIdlePlayer0 = new Texture(knightIdle0)
@@ -25,6 +27,7 @@ const txRunningPlayer3 = new Texture(knightRunning3)
 
 const txWallLeft = new Texture(wallLeft)
 const txForestTiles = new Texture(forestTiles)
+const txFloor = new Texture(floor)
 
 const loader = new Loader([
   txIdlePlayer0,
@@ -37,6 +40,7 @@ const loader = new Loader([
   txRunningPlayer3,
   txWallLeft,
   txForestTiles,
+  txFloor,
 ])
 
 export {
@@ -50,5 +54,6 @@ export {
   txRunningPlayer3,
   txWallLeft,
   txForestTiles,
+  txFloor,
   loader
 }

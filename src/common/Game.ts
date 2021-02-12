@@ -3,7 +3,7 @@ import { Player } from '../players/Player'
 import { PlayerActor } from '../players/PlayerActor'
 import { GAME_WIDTH, GAME_HEIGHT } from './config'
 import { loader } from './resources'
-import { StartRoomScene } from './scenes/StartRoomScene'
+import { StartRoomScene } from '../rooms/scenes/StartRoomScene'
 
 export class Game extends Engine {
   constructor() {
@@ -16,8 +16,7 @@ export class Game extends Engine {
     return super.start(loader).then(() => {
       const player = new Player()
       const playerActor = new PlayerActor(player)
-      const startRoom = new StartRoomScene(this)
-      startRoom.addPlayer(playerActor)
+      const startRoom = new StartRoomScene(this, playerActor)
 
       this.add('room', startRoom)
 
